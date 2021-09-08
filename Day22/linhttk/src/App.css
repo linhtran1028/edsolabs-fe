@@ -158,6 +158,25 @@ input {
 	font-weight: 800;
 	letter-spacing: 1px;
 }
+
+.layout-separator::after {
+	content: '';
+	position: absolute;
+	width: 148px;
+	top: 10px;
+	border: 1px dashed rgba(255, 255, 255, 0.4);
+	left: 36px;
+}
+
+.layout-separator::before {
+	content: '';
+	position: absolute;
+	width: 148px;
+	top: 10px;
+	border: 1px dashed rgba(255, 255, 255, 0.4);
+	left: -170px;
+}
+
 .btn__secondary:hover {
 	cursor: pointer;
 	opacity: 0.8;
@@ -170,20 +189,4 @@ input {
 	font-weight: 500;
 	font-size: 14px;
 	color: #ffffff;
-}
-.layout-separator::before {
-	content: '';
-	position: absolute;
-	width: 148px;
-	top: 10px;
-	border: 1px dashed rgba(255, 255, 255, 0.4);
-	left: -170px;
-}
-.layout-separator::after {
-	content: '';
-	position: absolute;
-	width: 148px;
-	top: 10px;
-	border: 1px dashed rgba(255, 255, 255, 0.4);
-	left: 36px;
 }
