@@ -12,8 +12,6 @@ import {
   Typography,
 } from '@material-ui/core';
 
-require('dotenv').config();
-
 function App() {
   const [city, setCity] = useState('');
   const [cityIncorrect, setCityIncorrect] = useState(false);

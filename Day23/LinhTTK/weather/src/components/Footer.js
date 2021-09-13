@@ -67,7 +67,6 @@ function Footer() {
   };
 
   const handleClose = () => {
-    console.log(process.env);
     setOpen(false);
   };
 
