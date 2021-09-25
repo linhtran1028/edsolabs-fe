@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Dropdown } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
-export default function Header(props) {
+export default function Header() {
   const history = useHistory();
   const handleHome = (e) => {
     history.push('/');
