@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Form, Button, Card } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { getUser } from '../../components/api/api';
+import { getUser } from '../../Components/Api/api';
 
-export default function Login(props) {
+export default function Login() {
   const history = useHistory();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

@@ -7,7 +7,7 @@ import {
   Button,
   Table,
 } from 'react-bootstrap';
-import { getStudent } from '../../components/api/api';
+import { getStudent } from '../../Components/Api/api';
 import moment from 'moment';
 import Header from './Header';
 const firstName = (value) => {
@@ -31,7 +31,7 @@ const findAge = (value) => {
   return moment(value.dob, '').fromNow().split(' ')[0];
 };
 
-export default function HomePage(props) {
+export default function HomePage() {
   const history = useHistory();
   const [student, setStudent] = useState();
   const [show, setShow] = useState(5);
@@ -53,215 +53,150 @@ export default function HomePage(props) {
     setShow(0);
     setSearch(!search);
   };
+  const renderRowInfo = (data, index) => {
+    return (
+      <tr key={index}>
+        <td>{data.id}</td>
+        <td>{firstName(data.full_name)}</td>
+        <td>{lastName(data.full_name)}</td>
+        <td>{gender(data.gender)}</td>
+        <td>{findAge(data)}</td>
+        <td>{data.rank}</td>
+      </tr>
+    );
+  };
 
   return (
-    <>
-      <main>
-        <Header />
-        <section className=" container mt-5">
-          <div className=" d-flex justify-content-end">
-            <InputGroup
-              className="mb-3 mx-3"
-              onChange={(e) => setName(e.target.value.trim().toLowerCase())}
-              value={name}
+    <main>
+      <Header />
+      <section className=" container mt-5">
+        <div className=" d-flex justify-content-end">
+          <InputGroup
+            className="mb-3 mx-3"
+            onChange={(e) => setName(e.target.value.trim().toLowerCase())}
+            value={name}
+          >
+            <FormControl
+              placeholder="Search name"
+              aria-label="Search name"
+              aria-describedby="basic-addon1"
+            />
+          </InputGroup>
+          <Dropdown>
+            <Dropdown.Toggle variant="variant" className=" border mx-3">
+              {sex}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => setGender('Male')}>
+                Male
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setGender('Female')}>
+                Female
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          <InputGroup
+            className="mb-3 mx-3"
+            onChange={(e) => {
+              setAge(e.target.value.trim());
+            }}
+            value={age}
+          >
+            <FormControl
+              placeholder="Age"
+              aria-label="Age"
+              aria-describedby="basic-addon1"
+            />
+          </InputGroup>
+          {search ? (
+            <Button
+              variant="outline-dark"
+              className=" active"
+              onClick={() => handleClick()}
             >
-              <FormControl
-                placeholder="Search name"
-                aria-label="Search name"
-                aria-describedby="basic-addon1"
-              />
-            </InputGroup>
-            <Dropdown>
-              <Dropdown.Toggle variant="variant" className=" border mx-3">
-                {sex}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item onClick={() => setGender('Male')}>
-                  Male
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => setGender('Female')}>
-                  Female
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-            <InputGroup
-              className="mb-3 mx-3"
-              onChange={(e) => {
-                setAge(e.target.value.trim());
-              }}
-              value={age}
-            >
-              <FormControl
-                placeholder="Age"
-                aria-label="Age"
-                aria-describedby="basic-addon1"
-              />
-            </InputGroup>
-            {search ? (
-              <Button
-                variant="outline-dark"
-                className=" active"
-                onClick={() => handleClick()}
-              >
-                <i className="fas fa-search "></i>
-              </Button>
-            ) : (
-              <Button variant="outline-dark" onClick={() => handleClick()}>
-                <i className="fas fa-search "></i>
-              </Button>
-            )}
-          </div>
-          <div>
-            <Table responsive>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Gender</th>
-                  <th>Age</th>
-                  <th>Rank</th>
-                </tr>
-              </thead>
-              <tbody>
-                {student &&
-                  student.map((e, index) => {
-                    if (index < show) {
-                      return (
-                        <tr key={index}>
-                          <td>{e.id}</td>
-                          <td>{firstName(e.full_name)}</td>
-                          <td>{lastName(e.full_name)}</td>
-                          <td>{gender(e.gender)}</td>
-                          <td>{findAge(e)}</td>
-                          <td>{e.rank}</td>
-                        </tr>
-                      );
-                    } else if (search === true) {
-                      if (
-                        e.full_name.toLowerCase().includes(name) &&
-                        gender(e.gender) === sex &&
-                        findAge(e) === age
-                      ) {
-                        return (
-                          <tr key={index}>
-                            <td>{e.id}</td>
-                            <td>{firstName(e.full_name)}</td>
-                            <td>{lastName(e.full_name)}</td>
-                            <td>{gender(e.gender)}</td>
-                            <td>{findAge(e)}</td>
-                            <td>{e.rank}</td>
-                          </tr>
-                        );
-                      } else if (
-                        e.full_name.toLowerCase().includes(name) &&
-                        age === '' &&
-                        gender(e.gender) === sex
-                      ) {
-                        return (
-                          <tr key={index}>
-                            <td>{e.id}</td>
-                            <td>{firstName(e.full_name)}</td>
-                            <td>{lastName(e.full_name)}</td>
-                            <td>{gender(e.gender)}</td>
-                            <td>{findAge(e)}</td>
-                            <td>{e.rank}</td>
-                          </tr>
-                        );
-                      } else if (
-                        name === '' &&
-                        gender(e.gender) === sex &&
-                        findAge(e) === age
-                      ) {
-                        return (
-                          <tr key={index}>
-                            <td>{e.id}</td>
-                            <td>{firstName(e.full_name)}</td>
-                            <td>{lastName(e.full_name)}</td>
-                            <td>{gender(e.gender)}</td>
-                            <td>{findAge(e)}</td>
-                            <td>{e.rank}</td>
-                          </tr>
-                        );
-                      } else if (
-                        e.full_name.toLowerCase().includes(name) &&
-                        findAge(e) === age &&
-                        sex === 'gender'
-                      ) {
-                        return (
-                          <tr key={index}>
-                            <td>{e.id}</td>
-                            <td>{firstName(e.full_name)}</td>
-                            <td>{lastName(e.full_name)}</td>
-                            <td>{gender(e.gender)}</td>
-                            <td>{findAge(e)}</td>
-                            <td>{e.rank}</td>
-                          </tr>
-                        );
-                      } else if (
-                        e.full_name.toLowerCase().includes(name) &&
-                        age === '' &&
-                        sex === 'gender'
-                      ) {
-                        return (
-                          <tr key={index}>
-                            <td>{e.id}</td>
-                            <td>{firstName(e.full_name)}</td>
-                            <td>{lastName(e.full_name)}</td>
-                            <td>{gender(e.gender)}</td>
-                            <td>{findAge(e)}</td>
-                            <td>{e.rank}</td>
-                          </tr>
-                        );
-                      } else if (
-                        name === '' &&
-                        age === '' &&
-                        gender(e.gender) === sex
-                      ) {
-                        return (
-                          <tr key={index}>
-                            <td>{e.id}</td>
-                            <td>{firstName(e.full_name)}</td>
-                            <td>{lastName(e.full_name)}</td>
-                            <td>{gender(e.gender)}</td>
-                            <td>{findAge(e)}</td>
-                            <td>{e.rank}</td>
-                          </tr>
-                        );
-                      } else if (
-                        name === '' &&
-                        findAge(e) === age &&
-                        sex === 'gender'
-                      ) {
-                        return (
-                          <tr key={index}>
-                            <td>{e.id}</td>
-                            <td>{firstName(e.full_name)}</td>
-                            <td>{lastName(e.full_name)}</td>
-                            <td>{gender(e.gender)}</td>
-                            <td>{findAge(e)}</td>
-                            <td>{e.rank}</td>
-                          </tr>
-                        );
-                      }
+              <i className="fas fa-search "></i>
+            </Button>
+          ) : (
+            <Button variant="outline-dark" onClick={() => handleClick()}>
+              <i className="fas fa-search "></i>
+            </Button>
+          )}
+        </div>
+        <div>
+          <Table responsive>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Rank</th>
+              </tr>
+            </thead>
+            <tbody>
+              {student &&
+                student.map((e, index) => {
+                  if (index < show) {
+                    return renderRowInfo(e, index);
+                  } else if (search === true) {
+                    if (
+                      e.full_name.toLowerCase().includes(name) &&
+                      gender(e.gender) === sex &&
+                      findAge(e) === age
+                    ) {
+                      return renderRowInfo(e, index);
+                    } else if (
+                      e.full_name.toLowerCase().includes(name) &&
+                      age === '' &&
+                      gender(e.gender) === sex
+                    ) {
+                      return renderRowInfo(e, index);
+                    } else if (
+                      name === '' &&
+                      gender(e.gender) === sex &&
+                      findAge(e) === age
+                    ) {
+                      return renderRowInfo(e, index);
+                    } else if (
+                      e.full_name.toLowerCase().includes(name) &&
+                      findAge(e) === age &&
+                      sex === 'gender'
+                    ) {
+                      return renderRowInfo(e, index);
+                    } else if (
+                      e.full_name.toLowerCase().includes(name) &&
+                      age === '' &&
+                      sex === 'gender'
+                    ) {
+                      return renderRowInfo(e, index);
+                    } else if (
+                      name === '' &&
+                      age === '' &&
+                      gender(e.gender) === sex
+                    ) {
+                      return renderRowInfo(e, index);
+                    } else if (
+                      name === '' &&
+                      findAge(e) === age &&
+                      sex === 'gender'
+                    ) {
+                      return renderRowInfo(e, index);
                     }
-                    return undefined;
-                  })}
-              </tbody>
-            </Table>
-            {show <= 25 && !search && (
-              <div className="d-flex justify-content-center">
-                <Button
-                  variant="outline-dark"
-                  onClick={(e) => setShow(show + 6)}
-                >
-                  Load More Student
-                </Button>
-              </div>
-            )}
-          </div>
-        </section>
-      </main>
-    </>
+                  }
+                  return undefined;
+                })}
+            </tbody>
+          </Table>
+          {show <= 25 && !search && (
+            <div className="d-flex justify-content-center">
+              <Button variant="outline-dark" onClick={(e) => setShow(show + 6)}>
+                Load More Student
+              </Button>
+            </div>
+          )}
+        </div>
+      </section>
+    </main>
   );
 }
