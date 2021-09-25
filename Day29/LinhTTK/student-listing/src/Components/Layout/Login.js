@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Card } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { getUser } from '../../Components/Api/api';
-
-Login.propTypes = {};
+import { getUser } from '../../components/api/api';
 
 export default function Login(props) {
   const history = useHistory();

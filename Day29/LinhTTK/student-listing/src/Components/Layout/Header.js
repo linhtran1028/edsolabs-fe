@@ -2,8 +2,6 @@ import React from 'react';
 import { Button, Dropdown } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
-Header.propTypes = {};
-
 export default function Header(props) {
   const history = useHistory();
   const handleHome = (e) => {

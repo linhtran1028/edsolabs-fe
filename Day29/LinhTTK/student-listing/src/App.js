@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Login from './Components/Layout/Login';
-import HomePage from './Components/Layout/Page';
-import List from './Components/Layout/List';
+import Login from './components/layout/Login';
+import HomePage from './components/layout/Page';
+import List from './components/layout/List';
 
 function App() {
   return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import Header from './Header';
-import { getStudent } from '../../Components/Api/api';
+import { getStudent } from '../api/api';
 
 const removeItem = (arr, e) => {
   const index = arr.indexOf(e);
@@ -24,7 +24,6 @@ const group = (e) => {
   });
   return arr;
 };
-List.propTypes = {};
 
 export default function List(props) {
   const [list, setList] = useState();

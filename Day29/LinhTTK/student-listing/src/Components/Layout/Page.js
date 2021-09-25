@@ -7,7 +7,7 @@ import {
   Button,
   Table,
 } from 'react-bootstrap';
-import { getStudent } from '../../Components/Api/api';
+import { getStudent } from '../../components/api/api';
 import moment from 'moment';
 import Header from './Header';
 const firstName = (value) => {
@@ -31,8 +31,6 @@ const findAge = (value) => {
   return moment(value.dob, '').fromNow().split(' ')[0];
 };
 
-HomePage.propTypes = {};
-
 export default function HomePage(props) {
   const history = useHistory();
   const [student, setStudent] = useState();
@@ -55,6 +53,7 @@ export default function HomePage(props) {
     setShow(0);
     setSearch(!search);
   };
+
   return (
     <>
       <main>
